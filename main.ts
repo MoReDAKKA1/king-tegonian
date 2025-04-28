@@ -39,10 +39,19 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.hazardLava1, function (sp
     info.changeLifeBy(-3)
     info.setScore(-1)
 })
+controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
+    animation.runImageAnimation(
+    Enemy_1,
+    assets.animation`Bird fly`,
+    500,
+    false
+    )
+})
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestOpen, function (sprite, location) {
     mySprite.sayText("You suck, try again")
     info.changeLifeBy(-3)
 })
+let Enemy_1: Sprite = null
 let mySprite: Sprite = null
 mySprite = sprites.create(assets.image`king`, SpriteKind.Player)
 mySprite.ay = 200
@@ -172,10 +181,4 @@ scene.setBackgroundImage(img`
     3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
     `)
 info.setLife(3)
-let Enemy_1 = sprites.create(assets.image`bald eagle`, SpriteKind.Enemy)
-animation.runImageAnimation(
-Enemy_1,
-assets.animation`Bird fly`,
-500,
-true
-)
+Enemy_1 = sprites.create(assets.image`bald eagle`, SpriteKind.Enemy)
