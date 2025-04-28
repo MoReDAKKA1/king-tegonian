@@ -172,3 +172,10 @@ scene.setBackgroundImage(img`
     3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
     `)
 info.setLife(3)
+let Enemy_1 = sprites.create(assets.image`bald eagle`, SpriteKind.Enemy)
+animation.runImageAnimation(
+Enemy_1,
+assets.animation`Bird fly`,
+500,
+true
+)
