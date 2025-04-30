@@ -39,14 +39,6 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.hazardLava1, function (sp
     info.changeLifeBy(-3)
     info.setScore(-1)
 })
-controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    animation.runImageAnimation(
-    Enemy_1,
-    assets.animation`Bird fly`,
-    500,
-    false
-    )
-})
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestOpen, function (sprite, location) {
     mySprite.sayText("You suck, try again")
     info.changeLifeBy(-3)
@@ -181,4 +173,20 @@ scene.setBackgroundImage(img`
     3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
     `)
 info.setLife(3)
-Enemy_1 = sprites.create(assets.image`bald eagle`, SpriteKind.Enemy)
+forever(function () {
+    Enemy_1 = sprites.create(assets.image`bald eagle`, SpriteKind.Enemy)
+    tiles.placeOnTile(Enemy_1, tiles.getTileLocation(3, 7))
+    if (!(spriteutils.isDestroyed(mySprite))) {
+        if (spriteutils.distanceBetween(mySprite, Enemy_1) < 10) {
+            Enemy_1.follow(mySprite, 10)
+        } else {
+            mySprite.setVelocity(0, 50)
+            animation.runImageAnimation(
+            Enemy_1,
+            assets.animation`Bird fly`,
+            500,
+            false
+            )
+        }
+    }
+})
