@@ -39,11 +39,14 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.hazardLava1, function (sp
     info.changeLifeBy(-3)
     info.setScore(-1)
 })
+sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function (sprite, otherSprite) {
+    game.gameOver(false)
+})
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestOpen, function (sprite, location) {
-    mySprite.sayText("You suck, try again")
+    mySprite.sayText("You suck, try again", 500, Math.percentChance(99))
+    mySprite.sayText("", 500, Math.percentChance(1))
     info.changeLifeBy(-3)
 })
-let Enemy_1: Sprite = null
 let mySprite: Sprite = null
 mySprite = sprites.create(assets.image`king`, SpriteKind.Player)
 mySprite.ay = 200
@@ -173,20 +176,118 @@ scene.setBackgroundImage(img`
     3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
     `)
 info.setLife(3)
+let Enemy_1 = sprites.create(assets.image`bald eagle`, SpriteKind.Enemy)
+tiles.placeOnTile(Enemy_1, tiles.getTileLocation(3, 7))
+let Enemy_2 = sprites.create(assets.image`bald eagle`, SpriteKind.Enemy)
+tiles.placeOnTile(Enemy_2, tiles.getTileLocation(22, 17))
+let Enemy_3 = sprites.create(assets.image`bald eagle`, SpriteKind.Enemy)
+tiles.placeOnTile(Enemy_3, tiles.getTileLocation(28, 3))
+let enemy4 = sprites.create(assets.image`bald eagle`, SpriteKind.Enemy)
+tiles.placeOnTile(enemy4, tiles.getTileLocation(40, 10))
+let e5 = sprites.create(assets.image`bald eagle`, SpriteKind.Enemy)
+tiles.placeOnTile(e5, tiles.getTileLocation(10, 15))
 forever(function () {
-    Enemy_1 = sprites.create(assets.image`bald eagle`, SpriteKind.Enemy)
-    tiles.placeOnTile(Enemy_1, tiles.getTileLocation(3, 7))
     if (!(spriteutils.isDestroyed(mySprite))) {
-        if (spriteutils.distanceBetween(mySprite, Enemy_1) < 10) {
-            Enemy_1.follow(mySprite, 10)
+        if (spriteutils.distanceBetween(mySprite, e5) < 150) {
+            animation.runImageAnimation(
+            e5,
+            assets.animation`Bird fly`,
+            500,
+            false
+            )
+            e5.follow(mySprite, 25)
         } else {
-            mySprite.setVelocity(0, 50)
+            animation.runImageAnimation(
+            e5,
+            assets.animation`Bird fly`,
+            500,
+            false
+            )
+            e5.setVelocity(5, 0)
+        }
+    }
+})
+forever(function () {
+    if (!(spriteutils.isDestroyed(mySprite))) {
+        if (spriteutils.distanceBetween(mySprite, enemy4) < 150) {
+            animation.runImageAnimation(
+            enemy4,
+            assets.animation`Bird fly`,
+            500,
+            false
+            )
+            enemy4.follow(mySprite, 25)
+        } else {
+            animation.runImageAnimation(
+            enemy4,
+            assets.animation`Bird fly`,
+            500,
+            false
+            )
+            enemy4.setVelocity(5, 0)
+        }
+    }
+})
+forever(function () {
+    if (!(spriteutils.isDestroyed(mySprite))) {
+        if (spriteutils.distanceBetween(mySprite, Enemy_3) < 150) {
+            animation.runImageAnimation(
+            Enemy_3,
+            assets.animation`Bird fly`,
+            500,
+            false
+            )
+            Enemy_3.follow(mySprite, 25)
+        } else {
+            animation.runImageAnimation(
+            Enemy_3,
+            assets.animation`Bird fly`,
+            500,
+            false
+            )
+            Enemy_3.setVelocity(5, 0)
+        }
+    }
+})
+forever(function () {
+    if (!(spriteutils.isDestroyed(mySprite))) {
+        if (spriteutils.distanceBetween(mySprite, Enemy_2) < 150) {
+            animation.runImageAnimation(
+            Enemy_2,
+            assets.animation`Bird fly`,
+            500,
+            false
+            )
+            Enemy_2.follow(mySprite, 25)
+        } else {
+            animation.runImageAnimation(
+            Enemy_2,
+            assets.animation`Bird fly`,
+            500,
+            false
+            )
+            Enemy_2.setVelocity(5, 0)
+        }
+    }
+})
+forever(function () {
+    if (!(spriteutils.isDestroyed(mySprite))) {
+        if (spriteutils.distanceBetween(mySprite, Enemy_1) < 150) {
             animation.runImageAnimation(
             Enemy_1,
             assets.animation`Bird fly`,
             500,
             false
             )
+            Enemy_1.follow(mySprite, 25)
+        } else {
+            animation.runImageAnimation(
+            Enemy_1,
+            assets.animation`Bird fly`,
+            500,
+            false
+            )
+            Enemy_1.setVelocity(5, 0)
         }
     }
 })
