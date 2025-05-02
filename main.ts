@@ -193,7 +193,7 @@ assets.animation`Bird fly`,
 false
 )
 let Enemy_3 = sprites.create(assets.image`bald eagle`, SpriteKind.Enemy)
-tiles.placeOnTile(Enemy_3, tiles.getTileLocation(28, 3))
+tiles.placeOnTile(Enemy_3, tiles.getTileLocation(28, 1))
 animation.runImageAnimation(
 Enemy_3,
 assets.animation`Bird fly`,
