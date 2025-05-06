@@ -43,8 +43,8 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function (sprite, otherSp
     game.gameOver(false)
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestOpen, function (sprite, location) {
-    mySprite.sayText("You suck, try again", 500, Math.percentChance(99))
-    mySprite.sayText("", 500, Math.percentChance(1))
+    mySprite.sayText("Ahh", 500, Math.percentChance(99))
+    mySprite.sayText("Oh noooo", 500, Math.percentChance(1))
     info.changeLifeBy(-3)
 })
 let mySprite: Sprite = null
