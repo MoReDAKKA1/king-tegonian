@@ -1,3 +1,6 @@
+namespace SpriteKind {
+    export const item = SpriteKind.create()
+}
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
         animation.runImageAnimation(
@@ -20,9 +23,20 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         )
     }
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.item, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
+    items_collected += 1
+    mySprite.sayText("I have one more item!")
+    info.player1.changeLifeBy(1)
+})
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestClosed, function (sprite, location) {
-    game.gameOver(true)
-    info.changeScoreBy(100)
+    if (items_collected == 4) {
+        info.changeScoreBy(100)
+        game.gameOver(true)
+    } else {
+        mySprite.sayText("get all the key parts!")
+        game.gameOver(false)
+    }
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
@@ -39,7 +53,7 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.hazardLava1, function (sp
     info.changeLifeBy(-3)
     info.setScore(-1)
 })
-sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function (sprite, otherSprite) {
+info.onLifeZero(function () {
     game.gameOver(false)
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestOpen, function (sprite, location) {
@@ -47,6 +61,11 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestOpen, function (spri
     mySprite.sayText("Oh noooo", 500, Math.percentChance(1))
     info.changeLifeBy(-3)
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    info.changeLifeBy(-3)
+    sprites.destroy(otherSprite)
+})
+let items_collected = 0
 let mySprite: Sprite = null
 mySprite = sprites.create(assets.image`king`, SpriteKind.Player)
 mySprite.ay = 200
@@ -176,7 +195,7 @@ scene.setBackgroundImage(img`
     3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
     `)
 info.setLife(3)
-let Enemy_1 = sprites.create(assets.image`bald eagle`, SpriteKind.Enemy)
+let Enemy_1 = sprites.create(assets.image`eagle 123`, SpriteKind.Enemy)
 tiles.placeOnTile(Enemy_1, tiles.getTileLocation(3, 7))
 animation.runImageAnimation(
 Enemy_1,
@@ -184,7 +203,7 @@ assets.animation`Bird fly`,
 500,
 true
 )
-let Enemy_2 = sprites.create(assets.image`bald eagle`, SpriteKind.Enemy)
+let Enemy_2 = sprites.create(assets.image`eagle 123`, SpriteKind.Enemy)
 tiles.placeOnTile(Enemy_2, tiles.getTileLocation(22, 17))
 animation.runImageAnimation(
 Enemy_2,
@@ -192,7 +211,7 @@ assets.animation`Bird fly`,
 500,
 false
 )
-let Enemy_3 = sprites.create(assets.image`bald eagle`, SpriteKind.Enemy)
+let Enemy_3 = sprites.create(assets.image`eagle 123`, SpriteKind.Enemy)
 tiles.placeOnTile(Enemy_3, tiles.getTileLocation(28, 1))
 animation.runImageAnimation(
 Enemy_3,
@@ -200,7 +219,7 @@ assets.animation`Bird fly`,
 500,
 false
 )
-let enemy4 = sprites.create(assets.image`bald eagle`, SpriteKind.Enemy)
+let enemy4 = sprites.create(assets.image`eagle 123`, SpriteKind.Enemy)
 tiles.placeOnTile(enemy4, tiles.getTileLocation(40, 10))
 animation.runImageAnimation(
 enemy4,
@@ -208,7 +227,7 @@ assets.animation`Bird fly`,
 500,
 false
 )
-let e5 = sprites.create(assets.image`bald eagle`, SpriteKind.Enemy)
+let e5 = sprites.create(assets.image`eagle 123`, SpriteKind.Enemy)
 tiles.placeOnTile(e5, tiles.getTileLocation(10, 15))
 animation.runImageAnimation(
 e5,
@@ -216,6 +235,15 @@ assets.animation`Bird fly`,
 500,
 false
 )
+let item_1 = sprites.create(assets.image`key piece 1`, SpriteKind.item)
+tiles.placeOnTile(item_1, tiles.getTileLocation(8, 6))
+let item_2 = sprites.create(assets.image`key piece 2`, SpriteKind.item)
+tiles.placeOnTile(item_2, tiles.getTileLocation(20, 8))
+let item_3 = sprites.create(assets.image`key piece 3`, SpriteKind.item)
+tiles.placeOnTile(item_3, tiles.getTileLocation(10, 2))
+let item_4 = sprites.create(assets.image`key chain`, SpriteKind.item)
+tiles.placeOnTile(item_4, tiles.getTileLocation(20, 13))
+items_collected = 0
 forever(function () {
     if (!(spriteutils.isDestroyed(mySprite))) {
         if (spriteutils.distanceBetween(mySprite, e5) < 150) {
