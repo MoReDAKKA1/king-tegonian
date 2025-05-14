@@ -28,14 +28,24 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.item, function (sprite, otherSpr
     items_collected += 1
     mySprite.sayText("I have one more item!")
     info.player1.changeLifeBy(1)
+    music.stopAllSounds()
+    music.setVolume(50)
+    music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.UntilDone)
+    pause(1000)
+    music.setVolume(10)
+    music.play(music.createSong(assets.song`Background music0`), music.PlaybackMode.LoopingInBackground)
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestClosed, function (sprite, location) {
     if (items_collected == 4) {
+        music.play(music.stringPlayable("G B A G C5 B A B ", 120), music.PlaybackMode.LoopingInBackground)
         info.changeScoreBy(100)
         game.gameOver(true)
     } else {
         mySprite.sayText("get all the key parts!")
         game.gameOver(false)
+        music.stopAllSounds()
+        music.setVolume(10)
+        music.play(music.stringPlayable("C5 A B G A F G E ", 120), music.PlaybackMode.LoopingInBackground)
     }
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -57,6 +67,7 @@ info.onLifeZero(function () {
     game.gameOver(false)
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestOpen, function (sprite, location) {
+    music.play(music.stringPlayable("C5 A B G A F G E ", 120), music.PlaybackMode.LoopingInBackground)
     mySprite.sayText("Ahh", 500, Math.percentChance(99))
     mySprite.sayText("Oh noooo", 500, Math.percentChance(1))
     info.changeLifeBy(-3)
@@ -64,14 +75,15 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestOpen, function (spri
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     info.changeLifeBy(-3)
     sprites.destroy(otherSprite)
+    music.stopAllSounds()
+    music.setVolume(50)
+    music.play(music.melodyPlayable(music.siren), music.PlaybackMode.UntilDone)
+    pause(1000)
+    music.setVolume(10)
+    music.play(music.createSong(assets.song`Background music0`), music.PlaybackMode.LoopingInBackground)
 })
 let items_collected = 0
 let mySprite: Sprite = null
-mySprite = sprites.create(assets.image`king`, SpriteKind.Player)
-mySprite.ay = 200
-scene.cameraFollowSprite(mySprite)
-tiles.setCurrentTilemap(tilemap`level1`)
-controller.moveSprite(mySprite, 100, 0)
 scene.setBackgroundImage(img`
     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
@@ -194,6 +206,16 @@ scene.setBackgroundImage(img`
     3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
     3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
     `)
+music.play(music.stringPlayable("E B C5 A B G A F ", 120), music.PlaybackMode.LoopingInBackground)
+game.showLongText("King Tegonian", DialogLayout.Top)
+music.stopAllSounds()
+music.setVolume(10)
+music.play(music.createSong(assets.song`Background music`), music.PlaybackMode.LoopingInBackground)
+mySprite = sprites.create(assets.image`king`, SpriteKind.Player)
+mySprite.ay = 200
+scene.cameraFollowSprite(mySprite)
+tiles.setCurrentTilemap(tilemap`level1`)
+controller.moveSprite(mySprite, 100, 0)
 info.setLife(3)
 let Enemy_1 = sprites.create(assets.image`eagle 123`, SpriteKind.Enemy)
 tiles.placeOnTile(Enemy_1, tiles.getTileLocation(3, 7))
