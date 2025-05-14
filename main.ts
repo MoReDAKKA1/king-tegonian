@@ -10,6 +10,12 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         false
         )
         mySprite.vy = -125
+        music.stopAllSounds()
+        music.setVolume(100)
+        music.play(music.melodyPlayable(music.jumpUp), music.PlaybackMode.InBackground)
+        pause(100)
+        music.setVolume(10)
+        music.play(music.createSong(assets.song`Background music`), music.PlaybackMode.LoopingInBackground)
     }
     info.changeScoreBy(1)
 })
@@ -37,6 +43,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.item, function (sprite, otherSpr
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestClosed, function (sprite, location) {
     if (items_collected == 4) {
+        music.stopAllSounds()
         music.play(music.stringPlayable("G B A G C5 B A B ", 120), music.PlaybackMode.LoopingInBackground)
         info.changeScoreBy(100)
         game.gameOver(true)
@@ -62,11 +69,14 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.hazardLava1, function (sp
     game.gameOver(false)
     info.changeLifeBy(-3)
     info.setScore(-1)
+    music.stopAllSounds()
+    music.play(music.stringPlayable("G B A G C5 B A B ", 120), music.PlaybackMode.LoopingInBackground)
 })
 info.onLifeZero(function () {
     game.gameOver(false)
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestOpen, function (sprite, location) {
+    music.stopAllSounds()
     music.play(music.stringPlayable("C5 A B G A F G E ", 120), music.PlaybackMode.LoopingInBackground)
     mySprite.sayText("Ahh", 500, Math.percentChance(99))
     mySprite.sayText("Oh noooo", 500, Math.percentChance(1))
@@ -76,8 +86,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     info.changeLifeBy(-3)
     sprites.destroy(otherSprite)
     music.stopAllSounds()
-    music.setVolume(50)
-    music.play(music.melodyPlayable(music.siren), music.PlaybackMode.UntilDone)
+    music.setVolume(150)
+    music.play(music.melodyPlayable(music.zapped), music.PlaybackMode.UntilDone)
     pause(1000)
     music.setVolume(10)
     music.play(music.createSong(assets.song`Background music0`), music.PlaybackMode.LoopingInBackground)
